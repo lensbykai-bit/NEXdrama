@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="km">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#090b10" />
+  <title>MovieFlix — Movies & Series</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#home" id="brandLogo">MOVIE<span>FLIX</span></a>
+    <nav class="nav" id="nav">
+      <a class="active" href="#home">Home</a>
+      <a href="#movies">Movies</a>
+      <a href="#series">Series</a>
+      <a href="#latest">Latest</a>
+      <a href="admin.html" class="admin-link">Admin</a>
+    </nav>
+    <div class="actions">
+      <button class="icon-btn" id="searchBtn" aria-label="Search">⌕</button>
+      <button class="menu-btn" id="menuBtn" aria-label="Menu">☰</button>
+    </div>
+  </header>
+
+  <section class="search-panel" id="searchPanel" aria-label="Search panel">
+    <input id="searchInput" type="search" placeholder="Search movies or series..." autocomplete="off" />
+    <button id="closeSearch" aria-label="Close search">✕</button>
+  </section>
+
+  <main id="home">
+    <section class="hero" id="hero">
+      <div class="hero-backdrop" id="heroBackdrop"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <span class="badge" id="heroBadge">FEATURED SERIES</span>
+        <h1 id="heroTitle">THE LAST<br><span>HORIZON</span></h1>
+        <p id="heroDescription"></p>
+        <div class="hero-meta" id="heroMeta"></div>
+        <div class="hero-buttons">
+          <button class="primary" id="heroWatch">▶ Watch Now</button>
+          <button class="secondary" id="heroInfo">ⓘ More Info</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="content filter-row-section">
+      <div class="filter-row" id="genreFilters"></div>
+    </section>
+
+    <section class="content" id="movies">
+      <div class="section-head"><h2>Popular Movies</h2><button data-view="movie">View all ›</button></div>
+      <div class="grid" id="movieGrid"></div>
+    </section>
+
+    <section class="content" id="series">
+      <div class="section-head"><h2>Popular Series</h2><button data-view="series">View all ›</button></div>
+      <div class="grid" id="seriesGrid"></div>
+    </section>
+
+    <section class="content" id="latest">
+      <div class="section-head"><h2>Latest Episodes</h2></div>
+      <div class="episode-list" id="episodeList"></div>
+    </section>
+
+    <section class="empty-state hidden" id="emptyState">
+      <div>⌕</div><h3>No titles found</h3><p>Try another search or genre.</p>
+    </section>
+  </main>
+
+  <div class="modal" id="detailModal" aria-hidden="true">
+    <div class="detail-card">
+      <button class="modal-close" data-close="detailModal">✕</button>
+      <div class="detail-poster" id="detailPoster"></div>
+      <div class="detail-body">
+        <span class="badge" id="detailType"></span>
+        <h2 id="detailTitle"></h2>
+        <div class="detail-meta" id="detailMeta"></div>
+        <p id="detailDescription"></p>
+        <div class="detail-actions"><button class="primary" id="detailWatch">▶ Watch</button></div>
+        <h3 class="episode-heading">Episodes</h3>
+        <div class="episode-picker" id="detailEpisodes"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="playerModal" aria-hidden="true">
+    <div class="player-card">
+      <button class="modal-close" data-close="playerModal">✕</button>
+      <div class="video-stage" id="videoStage">
+        <div class="video-placeholder" id="videoPlaceholder">
+          <div class="play-circle">▶</div>
+          <p>Add your licensed video URL from Admin.</p>
+        </div>
+        <video id="html5Player" controls playsinline></video>
+        <iframe id="embedPlayer" title="Video player" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="player-info"><div><span class="mini-label" id="playerEpisode"></span><h3 id="playerTitle">Video Player</h3></div></div>
+      <div class="episode-buttons" id="playerEpisodes"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <footer>
+    <div class="brand" id="footerBrand">MOVIE<span>FLIX</span></div>
+    <p>Streaming interface demo. Use only content you own or have permission to distribute.</p>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="data.js"></script>
+  <script src="db.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

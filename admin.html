@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="km">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#090b10" />
+  <title>MovieFlix Admin</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="admin-body">
+  <section class="auth-screen" id="authScreen">
+    <div class="auth-card">
+      <div class="brand auth-brand" id="authBrand">MOVIE<span>FLIX</span></div>
+      <span class="admin-badge">ADMIN V3</span>
+      <h1 id="authHeading">Admin Login</h1>
+      <p id="authIntro">Sign in with your authorized admin account.</p>
+      <div class="mode-banner" id="authModeBanner"></div>
+      <form class="auth-form" id="loginForm">
+        <label>Email<input id="loginEmail" type="email" autocomplete="email" required placeholder="admin@example.com" /></label>
+        <label>Password<input id="loginPassword" type="password" autocomplete="current-password" minlength="6" required placeholder="••••••••" /></label>
+        <button class="primary" id="loginBtn" type="submit">Sign In</button>
+      </form>
+      <button class="text-btn" id="showSignupBtn" type="button">Create first account</button>
+      <form class="auth-form hidden" id="signupForm">
+        <label>Email<input id="signupEmail" type="email" autocomplete="email" required placeholder="admin@example.com" /></label>
+        <label>Password<input id="signupPassword" type="password" autocomplete="new-password" minlength="8" required placeholder="At least 8 characters" /></label>
+        <button class="primary" id="signupBtn" type="submit">Create Account</button>
+        <button class="text-btn" id="backLoginBtn" type="button">Back to login</button>
+      </form>
+      <p class="auth-help">After creating the first account, add its email to <code>admins</code> using the included <b>setup.sql</b> instructions.</p>
+      <a class="ghost-link full-link" href="index.html">← Back to website</a>
+    </div>
+  </section>
+
+  <div id="dashboard" class="hidden">
+    <header class="admin-topbar">
+      <div><a class="brand" href="index.html" id="adminBrand">MOVIE<span>FLIX</span></a><span class="admin-badge">ADMIN V3</span></div>
+      <div><span class="db-status" id="dbStatus"></span><button class="ghost-button" id="logoutBtn">Log out</button><a class="ghost-link" href="index.html">← Website</a></div>
+    </header>
+
+    <div class="admin-shell">
+      <aside class="admin-sidebar">
+        <button class="side-link active" data-tab="dashboardTab">⌂ Dashboard</button>
+        <button class="side-link" data-tab="contentTab">▣ Movies & Series</button>
+        <button class="side-link" data-tab="settingsTab">⚙ Brand & Database</button>
+        <button class="side-link" data-tab="backupTab">⇄ Backup</button>
+      </aside>
+
+      <main class="admin-main">
+        <section class="admin-tab" id="dashboardTab">
+          <div class="admin-title"><div><p>CONTROL CENTER</p><h1>Dashboard</h1></div><button class="primary" id="newContentBtn">＋ Add New Title</button></div>
+          <div class="mode-banner" id="dashboardModeBanner"></div>
+          <div class="stat-grid">
+            <div class="stat-card"><span>Movies</span><strong id="statMovies">0</strong><small>Published titles</small></div>
+            <div class="stat-card"><span>Series</span><strong id="statSeries">0</strong><small>Published titles</small></div>
+            <div class="stat-card"><span>Episodes</span><strong id="statEpisodes">0</strong><small>Total videos</small></div>
+            <div class="stat-card"><span>Featured</span><strong id="statFeatured">0</strong><small>Homepage hero</small></div>
+          </div>
+          <div class="admin-panel"><div class="panel-head"><h2>Recent Titles</h2></div><div id="recentList"></div></div>
+        </section>
+
+        <section class="admin-tab hidden" id="contentTab">
+          <div class="admin-title"><div><p>LIBRARY</p><h1>Movies & Series</h1></div><button class="primary" id="newContentBtn2">＋ Add New Title</button></div>
+          <div class="toolbar"><input id="adminSearch" type="search" placeholder="Search titles..." /><select id="adminTypeFilter"><option value="all">All types</option><option value="movie">Movies</option><option value="series">Series</option></select></div>
+          <div class="admin-panel no-pad table-wrap"><table class="content-table"><thead><tr><th>Title</th><th>Type</th><th>Year</th><th>Episodes</th><th>Featured</th><th>Actions</th></tr></thead><tbody id="contentTable"></tbody></table></div>
+        </section>
+
+        <section class="admin-tab hidden" id="settingsTab">
+          <div class="admin-title"><div><p>SETTINGS</p><h1>Brand & Database</h1></div></div>
+          <div class="settings-stack">
+            <div class="admin-panel">
+              <h2>Website Brand</h2>
+              <form class="admin-form" id="brandForm">
+                <label>Website Name<input id="brandName" required placeholder="MOVIEFLIX" /></label>
+                <label>Accent Word<input id="brandAccent" placeholder="FLIX" /><small>This part is highlighted in the logo.</small></label>
+                <label>Tagline<input id="brandTagline" placeholder="Movies & Series" /></label>
+                <div class="form-actions"><button class="primary" type="submit">Save Brand</button></div>
+              </form>
+            </div>
+            <div class="admin-panel">
+              <h2>Database Connection</h2>
+              <div class="connection-card" id="connectionInfo"></div>
+              <p>Connection values are stored in <code>config.js</code>. Use a Supabase <b>publishable key</b> only. Never place a secret/service-role key in browser files.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="admin-tab hidden" id="backupTab">
+          <div class="admin-title"><div><p>DATA</p><h1>Backup</h1></div></div>
+          <div class="backup-grid">
+            <div class="admin-panel"><h2>Export JSON</h2><p>Download the current catalog and brand settings.</p><button class="secondary" id="exportBtn">Export Backup</button></div>
+            <div class="admin-panel" id="demoResetPanel"><h2>Demo Reset</h2><p>Only available in Demo Mode. Restores included fictional sample titles.</p><button class="secondary" id="resetBtn">Reset Demo Data</button></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="modal" id="contentModal" aria-hidden="true">
+    <div class="editor-card">
+      <button class="modal-close" data-close="contentModal">✕</button>
+      <div class="editor-title"><span class="mini-label">CONTENT EDITOR</span><h2 id="editorHeading">Add New Title</h2></div>
+      <form id="contentForm" class="form-grid">
+        <input id="contentId" type="hidden" />
+        <label class="wide">Title<input id="titleInput" required /></label>
+        <label>Type<select id="typeInput"><option value="movie">Movie</option><option value="series">Series</option></select></label>
+        <label>Year<input id="yearInput" type="number" min="1900" max="2100" value="2026" required /></label>
+        <label>Genre<input id="genreInput" placeholder="Action, Drama" /></label>
+        <label>Quality<select id="qualityInput"><option>HD</option><option>4K</option><option>FHD</option><option>SD</option></select></label>
+        <label class="wide">Poster URL<input id="posterInput" type="url" placeholder="https://..." /><small>Use an image you have permission to display.</small></label>
+        <label class="wide">Description<textarea id="descriptionInput" rows="4"></textarea></label>
+        <label class="check-row wide"><input id="featuredInput" type="checkbox" /><span>Feature this title on homepage</span></label>
+        <div class="form-actions wide"><button class="secondary" data-close="contentModal" type="button">Cancel</button><button class="primary" id="saveContentBtn" type="submit">Save Title</button></div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal" id="episodeModal" aria-hidden="true">
+    <div class="episode-editor-card">
+      <button class="modal-close" data-close="episodeModal">✕</button>
+      <div class="editor-title"><span class="mini-label">VIDEO MANAGER</span><h2 id="episodeHeading">Episodes</h2></div>
+      <input id="episodeItemId" type="hidden" />
+      <form class="episode-form" id="episodeForm">
+        <input id="episodeId" type="hidden" />
+        <label>Episode #<input id="episodeNumber" type="number" min="1" value="1" required /></label>
+        <label>Title<input id="episodeTitle" placeholder="Episode title" /></label>
+        <label>Duration<input id="episodeDuration" placeholder="45 min" /></label>
+        <label class="wide">Video URL<input id="episodeVideo" type="url" placeholder="https://...mp4 or YouTube/Vimeo URL" /><small>Only add video you own or are authorized to distribute.</small></label>
+        <div class="form-actions wide"><button class="secondary" id="clearEpisodeBtn" type="button">Clear</button><button class="primary" id="saveEpisodeBtn" type="submit">Save Video</button></div>
+      </form>
+      <div class="episode-admin-list" id="episodeAdminList"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="config.js"></script>
+  <script src="data.js"></script>
+  <script src="db.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
